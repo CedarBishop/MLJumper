@@ -13,7 +13,6 @@ public class Character : MonoBehaviour
     public float cutJumpHeight = 0.5f;
 
     public LayerMask groundLayer;
-    public LayerMask platformLayer;
 
     private JumperAgent jumperAgent;
     private Animator animator;
@@ -25,8 +24,6 @@ public class Character : MonoBehaviour
     private bool isGrounded;
     private float horizontal;
     private bool isHoldingJumpKey;
-    private bool canDoubleJump;
-    private int airJumps = 0;
 
 
 
@@ -45,7 +42,6 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         // Sprite & animation Update starts here
-        //animator.SetFloat("Speed", Mathf.Abs(rigidbody.velocity.x));
 
         if (horizontal > 0)
         {
@@ -56,20 +52,21 @@ public class Character : MonoBehaviour
             spriteRenderer.flipX = true;
         }
 
+        animator.SetFloat("Horizontal", horizontal);
+        animator.SetFloat("Vertical", rigidbody.velocity.y);
+
         // ends here
 
 
         // Grounded & jump logic update starts here
 
-        isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.25f, groundLayer) || Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.25f, platformLayer);
-
+        isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.25f, groundLayer);
         kyoteTimer -= Time.fixedDeltaTime;
         jumpBufferTimer -= Time.fixedDeltaTime;
 
         if (isGrounded)
         {
             kyoteTimer = kyoteTime;
-            airJumps = 0;
         }
 
         BetterJump();
@@ -98,15 +95,6 @@ public class Character : MonoBehaviour
     {
         isHoldingJumpKey = true;
         jumpBufferTimer = jumpBufferTime;
-
-        if (isGrounded == false)
-        {
-            if (canDoubleJump && airJumps < 1)
-            {
-                airJumps++;
-                Jump();
-            }
-        }
     }
 
     public void EndJump()
@@ -134,14 +122,13 @@ public class Character : MonoBehaviour
         }
     }
 
-
-    public void CanDoubleJump(bool value)
-    {
-        canDoubleJump = value;
-    }
-
     public void Died ()
     {
         jumperAgent.Died();
+    }
+
+    public void SquishedEnemy ()
+    {
+        jumperAgent.SquishedEnemy();
     }
 }

@@ -97,11 +97,16 @@ public class JumperAgent : Agent
 
     public void Died ()
     {
-        AddReward(-1f);
+        AddReward(-2f);
     }
 
     public void CompleteLevel()
     {
         AddReward(5f);
+    }
+
+    public void SquishedEnemy ()
+    {
+        AddReward(2f);
     }
 }
