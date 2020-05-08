@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Character character;
     private Enemy[] enemies;
     private Coin[] coins;
+    private CameraController camera;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         enemies = FindObjectsOfType<Enemy>();
         coins = FindObjectsOfType<Coin>();
         character = agent.GetComponent<Character>();
+        camera = Camera.main.GetComponent<CameraController>();
     }
 
     private void Update()
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         ResetEnemies();
         ResetCoins();
-        Camera.main.GetComponent<CameraController>().ResetPosition();
+        camera.ResetPosition();
     }
 
     private void ResetEnemies()

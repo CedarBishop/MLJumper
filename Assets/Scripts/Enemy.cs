@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MLAgents;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         startingPosition = transform.position;
         facingRight = true;
+        movementSpeed = Academy.Instance.FloatProperties.GetPropertyWithDefault("movement_speed", 50.0f);
         StartCoroutine("FlipDirection");
     }
 
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
         transform.position = startingPosition;
         StopAllCoroutines();
         StartCoroutine("FlipDirection");
+        movementSpeed = Academy.Instance.FloatProperties.GetPropertyWithDefault("movement_speed", 50.0f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
