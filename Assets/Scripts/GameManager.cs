@@ -8,12 +8,33 @@ using MLAgents;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-
-
-
     public JumperAgent agent;
-
     public Text rewardText;
+
+    private Character character;
+    private Enemy[] enemies;
+    private Coin[] coins;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
+    private void Start()
+    {
+        enemies = FindObjectsOfType<Enemy>();
+        coins = FindObjectsOfType<Coin>();
+        character = agent.GetComponent<Character>();
+    }
 
     private void Update()
     {
@@ -22,11 +43,37 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-
+        character.Died();
+        GeneralReset();
     }
 
     public void PlayerWon()
     {
+        character.PlayerWon();
+        GeneralReset();
+    }
 
+    void GeneralReset ()
+    {
+        ResetEnemies();
+        ResetCoins();
+        Camera.main.GetComponent<CameraController>().ResetPosition();
+    }
+
+    private void ResetEnemies()
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].gameObject.SetActive(true);
+            enemies[i].ResetPosition();
+        }
+    }
+
+    void ResetCoins()
+    {
+        for (int i = 0; i < coins.Length; i++)
+        {
+            coins[i].gameObject.SetActive(true);
+        }
     }
 }

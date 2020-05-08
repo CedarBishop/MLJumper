@@ -127,8 +127,20 @@ public class Character : MonoBehaviour
         jumperAgent.Died();
     }
 
+    public void PlayerWon()
+    {
+        jumperAgent.CompleteLevel();
+    }
+
     public void SquishedEnemy ()
     {
+        print("Enemy Died");
+        jumpBufferTimer = jumpBufferTime;
         jumperAgent.SquishedEnemy();
+    }
+
+    public void PickedUpCoin ()
+    {
+        jumperAgent.PickedUpCoin();
     }
 }

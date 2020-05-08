@@ -8,7 +8,7 @@ public class FlagPole : MonoBehaviour
     {
         if (collision.GetComponent<Character>())
         {
-
+            GameManager.instance.PlayerWon();
         }
     }
 }

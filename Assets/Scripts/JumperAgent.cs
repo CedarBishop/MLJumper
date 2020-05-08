@@ -8,12 +8,14 @@ public class JumperAgent : Agent
     Character character;
     Vector3 startingPosition;
     float previousJumpAction = 0;
+    private FlagPole flagPole;
 
     public override void InitializeAgent()
     {
         base.InitializeAgent();
         character = GetComponent<Character>();
         startingPosition = transform.position;
+        flagPole = FindObjectOfType<FlagPole>();
     }
 
     public override void AgentReset()
@@ -50,13 +52,16 @@ public class JumperAgent : Agent
 
         if (maxStep > 0)
         {
-            AddReward(-1.0f / maxStep);
+            AddReward(-2.0f / maxStep);
         }
     }
 
     public override void CollectObservations()
     {
-
+        //distance to flag pole
+        AddVectorObs(Vector2.Distance(flagPole.transform.position, transform.position));
+        // Direction to flagpole
+        AddVectorObs(new Vector2(flagPole.transform.position.x - transform.position.x, flagPole.transform.position.y - transform.position.y));
     }
 
     private void FixedUpdate()
@@ -97,16 +102,23 @@ public class JumperAgent : Agent
 
     public void Died ()
     {
-        AddReward(-2f);
+        AddReward(-5f);
+        Done();
     }
 
     public void CompleteLevel()
     {
         AddReward(5f);
+        Done();
     }
 
     public void SquishedEnemy ()
     {
         AddReward(2f);
+    }
+
+    public void PickedUpCoin()
+    {
+        AddReward(1f);
     }
 }

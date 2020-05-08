@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Coin
+  - Enemy
+  - Spike
+  - Flag
   layers:
   - Default
   - TransparentFX

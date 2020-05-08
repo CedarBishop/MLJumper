@@ -28,4 +28,9 @@ public class CameraController : MonoBehaviour
         leftWall.transform.localPosition = new Vector3(main.aspect * -5.2f, 0, 0);
     }
 
+    public void ResetPosition ()
+    {
+        transform.position = startingPosition;
+    }
+
 }
