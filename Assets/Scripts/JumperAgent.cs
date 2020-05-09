@@ -21,6 +21,7 @@ public class JumperAgent : Agent
     public override void AgentReset()
     {
         transform.position = startingPosition;
+        GameManager.instance.GeneralReset();
     }
 
     public override void AgentAction(float[] vectorAction)

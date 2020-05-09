@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         GeneralReset();
     }
 
-    void GeneralReset ()
+    public void GeneralReset ()
     {
         ResetEnemies();
         ResetCoins();
